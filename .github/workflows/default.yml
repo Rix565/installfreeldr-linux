@@ -1,0 +1,23 @@
+name: action-publish
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - master
+
+jobs:
+    linux:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+            
+            - name: Install gcc
+              run: sudo apt install gcc
+            - name: Compile
+              run: gcc install.c volume.c -o installfreeldr
+            - uses: actions/upload-artifact@v2
+              with:
+                    name: build
+                    path: ./installfreeldr
